@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   OperandType.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/25 13:44:40 by jhache            #+#    #+#             */
-/*   Updated: 2019/06/25 21:19:11 by jhache           ###   ########.fr       */
+/*   Created: 2019/06/25 17:41:52 by jhache            #+#    #+#             */
+/*   Updated: 2019/06/25 20:50:48 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "Operand.hpp"
+#ifndef OPERANDTYPE_HPP
+# define OPERANDTYPE_HPP
 
-int		main(void)
+enum	OperandType
 {
-	std::cout << "hello World!" << std::endl;
+	Int8 = 0,
+	Int16 = 1,
+	Int32 = 2,
+	Float = 3,
+	Double = 4,
+	Unknown = -1
+};
 
-	Operand	a(13, OpenrandType::Int8);
-
-	return 0;
-}
+#endif // OPERANDTYPE_HPP

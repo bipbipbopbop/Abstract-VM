@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 13:39:04 by jhache            #+#    #+#              #
-#    Updated: 2019/06/25 13:53:34 by jhache           ###   ########.fr        #
+#    Updated: 2019/06/25 21:10:02 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,6 @@ NAME := abstract_vm
 SRC_PATH := src
 OBJ_PATH := .bin
 INC_PATH := include
-
-# Compiler
-CC := g++
-CCFLAGS := -Wall -Werror -Wextra
-INCFLAGS := -iquote $(INC_PATH)
-LDFLAGS :=
-
 
 # Commands
 RM := rm -f
@@ -35,12 +28,25 @@ SRC_NAME :=	main.cpp
 
 INC_NAME :=
 
+INC_NAME += Operand/IOperand.hpp	\
+			Operand/Operand.hpp		\
+			Operand/OperandType.hpp
+
 
 SRC := $(addprefix $(SRC_PATH)/, $(SRC))
 OBJ := $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.cpp=.o))
 INC := $(addprefix $(INC_PATH)/, $(INC_NAME))
 
 OBJ_DIRS := $(sort $(dir $(OBJ)))
+INC_DIRS := $(sort $(dir $(INC)))
+
+# Compiler
+CC := g++
+CCFLAGS := -Wall -Werror -Wextra -std=c++1z
+INCFLAGS := $(addprefix -iquote , $(INC_DIRS))
+LDFLAGS :=
+
+
 
 # Rules
 all: $(NAME)
@@ -64,4 +70,4 @@ fclean: clean
 re: fclean all
 
 
-.PHONY: all clean fclean re libraries
+.PHONY: all clean fclean re
