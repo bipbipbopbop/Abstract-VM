@@ -1,3 +1,4 @@
+### GIT ADDITION:
 # Prerequisites
 *.d
 
@@ -30,3 +31,13 @@
 *.exe
 *.out
 *.app
+
+
+### PROJECT-DEPENDANT FILES:
+abstract_vm
+.bin
+
+
+### VS CODE FILES:
+.vscode
+.vscode/**/*
