@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 14:04:09 by jhache            #+#    #+#             */
-/*   Updated: 2019/06/25 21:22:05 by jhache           ###   ########.fr       */
+/*   Updated: 2019/06/27 14:16:42 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,133 +14,56 @@
 # define OPERAND_HPP
 
 # include "IOperand.hpp"
-# include <type_traits>
-# include <variant>
+# include "OperandValue.hpp"
 
 class Operand : public IOperand
 {
 public:
-
-	typedef std::variant<int8_t, int16_t, int32_t, float, double>	OperandValueType;
-
-	Operand()
-		: _type(OperandType::Unknown)
-	{}
-
-	Operand(std::string const &value, OperandType type)
-		: _value(value), _type(type)
-	{}
-
-	Operand(Operand const &src)
+	template <typename ArithmeticT>
+	Operand(ArithmeticT value)
 	{
-		*this = src;
+		static_assert(std::is_arithmetic<ArithmeticT>::value,
+				"Operand constructor must take one arithmetic value.");
+
+		if constexpr (std::is_same<ArithmeticT, int8_t>::value)
+			this->_type = OperandType::Int8;
+		else if constexpr (std::is_same<ArithmeticT, int16_t>::value)
+			this->_type = OperandType::Int16;
+		else if constexpr (std::is_same<ArithmeticT, int32_t>::value)
+			this->_type = OperandType::Int32;
+		else if constexpr (std::is_same<ArithmeticT, float>::value)
+			this->_type = OperandType::Float;
+		else if constexpr (std::is_same<ArithmeticT, double>::value)
+			this->_type = OperandType::Double;
+		else
+			this->_type = OperandType::Unknown;
+
+		this->_valueStr = std::to_string(value);
 	}
 
-	virtual ~Operand()
-	{}
+	Operand();
+	Operand(OperandValue value);
+	Operand(Operand const &src);
+	virtual ~Operand();
 
-	Operand  &operator=(Operand const &rhs)
-	{
-		this->_value = rhs._value;
+	Operand						&operator=(Operand const &rhs);
 
-		return *this;
-	}
+	virtual int					getPrecision() const;
+	virtual OperandType			getType() const;
 
-	virtual int			getPrecision() const//Really it is a silly function
-	{
-		return this->getOperandType();
-	}
+	virtual IOperand const		*operator+(IOperand const &rhs) const;
+	virtual IOperand const		*operator-(IOperand const &rhs) const;
+	virtual IOperand const		*operator*(IOperand const &rhs) const;
+	virtual IOperand const		*operator/(IOperand const &rhs) const;
+	virtual IOperand const		*operator%(IOperand const &rhs) const;
 
-	virtual OperandType	getType() const
-	{
-		return this->getOperandType();
-	}
+	virtual std::string const	&toString() const;
 
-
-	virtual IOperand const	*operator+(IOperand const &rhs) const
-	{
-		OperandValueType	result;
-		OperandType			typeToCast;
-
-		typeToCast = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
-		result = std::get<typeToCast>(convertStr(this->_value, typeToCast)) + std::get<typeToCast>(convertStr(rhs._value, typeToCast));
-		return new Operand(std::to_string(std::get<typeToCast>(result), typeToCast));
-	}
-
-	virtual IOperand const	*operator-(IOperand const &rhs) const
-	{
-		OperandValueType	result;
-		OperandType			typeToCast;
-
-		typeToCast = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
-		result = std::get<typeToCast>(convertStr(this->_value, typeToCast)) - std::get<typeToCast>(convertStr(rhs._value, typeToCast));
-		return new Operand(std::to_string(std::get<typeToCast>(result), typeToCast));
-	}
-
-	virtual IOperand const	*operator*(IOperand const &rhs) const
-	{
-		OperandValueType	result;
-		OperandType			typeToCast;
-
-		typeToCast = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
-		result = std::get<typeToCast>(convertStr(this->_value, typeToCast)) * std::get<typeToCast>(convertStr(rhs._value, typeToCast));
-		return new Operand(std::to_string(std::get<typeToCast>(result), typeToCast));
-	}
-
-	virtual IOperand const	*operator/(IOperand const &rhs) const
-	{
-		OperandValueType	result;
-		OperandType			typeToCast;
-
-		typeToCast = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
-		result = std::get<typeToCast>(convertStr(this->_value, typeToCast)) / std::get<typeToCast>(convertStr(rhs._value, typeToCast));
-		return new Operand(std::to_string(std::get<typeToCast>(result), typeToCast));
-	}
-
-	virtual IOperand const	*operator%(IOperand const &rhs) const
-	{
-		OperandValueType	result;
-		OperandType			typeToCast;
-
-		typeToCast = (this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType());
-		result = std::get<typeToCast>(convertStr(this->_value, typeToCast)) % std::get<typeToCast>(convertStr(rhs._value, typeToCast));
-		return new Operand(std::to_string(std::get<typeToCast>(result), typeToCast));
-	}
-
-	virtual std::string const	&toString() const
-	{//It should return a rvalue reference ...
-		return this->_value;
-	}
-
-	OperandType	getOperandType() const
-	{
-		return this->_type;
-	}
-
-	static OperandValueType		convertStr(std::string const &str, OperandType type)
-	{
-		OperandValueType		result;
-
-		if (type == OperandType::Int8)
-			result = static_cast<int8_t>(stol(str));
-		else if (type == OperandType::Int16)
-			result = static_cast<int16_t>(stol(str));
-		else if (type == OperandType::Int32)
-			result = static_cast<int32_t>(stol(str));
-		else if (type == OperandType::Float)
-			result = stof(str);
-		else if (type == OperandType::Double)
-			result = stod(str);
-	//	else
-	//		throw my_badType();
-
-		return result;
-	}
+	static OperandValue			convertStr(std::string const &str, OperandType type);
 
 private:
-	std::string			_value;
+	std::string			_valueStr;
 	OperandType			_type;
 };
-
 
 #endif //OPERAND_HPP

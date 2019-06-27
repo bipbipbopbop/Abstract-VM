@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 13:39:04 by jhache            #+#    #+#              #
-#    Updated: 2019/06/25 21:10:02 by jhache           ###   ########.fr        #
+#    Updated: 2019/06/27 14:19:17 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,15 @@ MKDIR := mkdir -p
 
 # Sources files
 SRC_NAME :=	main.cpp
+SRC_NAME += Operand/Operand.cpp			\
+			Operand/OperandType.cpp		\
+			Operand/OperandValue.cpp
 
 INC_NAME :=
-
 INC_NAME += Operand/IOperand.hpp	\
 			Operand/Operand.hpp		\
-			Operand/OperandType.hpp
+			Operand/OperandType.hpp	\
+			Operand/OperandValue.hpp
 
 
 SRC := $(addprefix $(SRC_PATH)/, $(SRC))
