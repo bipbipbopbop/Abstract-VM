@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 12:05:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/06/27 13:56:18 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/02 13:16:14 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ OperandValue::OperandValue()
 	: type(OperandType::Unknown)
 {}
 
-OperandValue::OperandValue(OperandValue const &rhs)
-{
-	*this = rhs;
-}
+OperandValue::OperandValue(OperandValue const &src)
+	: value(src.value), type(src.type)
+{}
+
+OperandValue::OperandValue(OperandValue &&src)
+	: value(src.value), type(src.type)
+{}
 
 OperandValue::~OperandValue()
 {}
@@ -35,20 +38,29 @@ OperandValue	&OperandValue::operator=(OperandValue const &rhs)
 	return *this;
 }
 
+OperandValue	&OperandValue::operator=(OperandValue &&rhs)
+{
+	std::swap(this->value, rhs.value);
+	this->type = rhs.type;
+
+	return *this;
+}
+
+
 OperandValue	OperandValue::operator+(OperandValue const &rhs) const
 {
 	switch (this->type)
 	{
 		case OperandType::Int8:
-			return (this->value.i8 + rhs.value.i8);
+			return safeAdd(this->value.i8, rhs.value.i8);
 		case OperandType::Int16:
-			return (this->value.i16 + rhs.value.i16);
+			return safeAdd(this->value.i16, rhs.value.i16);
 		case OperandType::Int32:
-			return (this->value.i32 + rhs.value.i32);
+			return safeAdd(this->value.i32, rhs.value.i32);
 		case OperandType::Float:
-			return (this->value.f + rhs.value.f);
+			return safeAdd(this->value.f, rhs.value.f);
 		case OperandType::Double:
-			return (this->value.d + rhs.value.d);
+			return safeAdd(this->value.d, rhs.value.d);
 		default:
 			//throw OperandValue_BadType();
 			return OperandValue();
@@ -60,15 +72,15 @@ OperandValue	OperandValue::operator-(OperandValue const &rhs) const
 	switch (this->type)
 	{
 		case OperandType::Int8:
-			return (this->value.i8 - rhs.value.i8);
+			return safeSub(this->value.i8, rhs.value.i8);
 		case OperandType::Int16:
-			return (this->value.i16 - rhs.value.i16);
+			return safeSub(this->value.i16, rhs.value.i16);
 		case OperandType::Int32:
-			return (this->value.i32 - rhs.value.i32);
+			return safeSub(this->value.i32, rhs.value.i32);
 		case OperandType::Float:
-			return (this->value.f - rhs.value.f);
+			return safeSub(this->value.f, rhs.value.f);
 		case OperandType::Double:
-			return (this->value.d - rhs.value.d);
+			return safeSub(this->value.d, rhs.value.d);
 		default:
 			//throw OperandValue_BadType();
 			return OperandValue();
@@ -80,15 +92,15 @@ OperandValue	OperandValue::operator*(OperandValue const &rhs) const
 	switch (this->type)
 	{
 		case OperandType::Int8:
-			return (this->value.i8 * rhs.value.i8);
+			return safeMul(this->value.i8, rhs.value.i8);
 		case OperandType::Int16:
-			return (this->value.i16 * rhs.value.i16);
+			return safeMul(this->value.i16, rhs.value.i16);
 		case OperandType::Int32:
-			return (this->value.i32 * rhs.value.i32);
+			return safeMul(this->value.i32, rhs.value.i32);
 		case OperandType::Float:
-			return (this->value.f * rhs.value.f);
+			return safeMul(this->value.f, rhs.value.f);
 		case OperandType::Double:
-			return (this->value.d * rhs.value.d);
+			return safeMul(this->value.d, rhs.value.d);
 		default:
 			//throw OperandValue_BadType();
 			return OperandValue();
@@ -100,15 +112,15 @@ OperandValue	OperandValue::operator/(OperandValue const &rhs) const
 	switch (this->type)
 	{
 		case OperandType::Int8:
-			return (this->value.i8 / rhs.value.i8);
+			return safeDiv(this->value.i8, rhs.value.i8);
 		case OperandType::Int16:
-			return (this->value.i16 / rhs.value.i16);
+			return safeDiv(this->value.i16, rhs.value.i16);
 		case OperandType::Int32:
-			return (this->value.i32 / rhs.value.i32);
+			return safeDiv(this->value.i32, rhs.value.i32);
 		case OperandType::Float:
-			return (this->value.f / rhs.value.f);
+			return safeDiv(this->value.f, rhs.value.f);
 		case OperandType::Double:
-			return (this->value.d / rhs.value.d);
+			return safeDiv(this->value.d, rhs.value.d);
 		default:
 			//throw OperandValue_BadType();
 			return OperandValue();
@@ -120,15 +132,15 @@ OperandValue	OperandValue::operator%(OperandValue const &rhs) const
 	switch (this->type)
 	{
 		case OperandType::Int8:
-			return (this->value.i8 % rhs.value.i8);
+			return safeMod(this->value.i8, rhs.value.i8);
 		case OperandType::Int16:
-			return (this->value.i16 % rhs.value.i16);
+			return safeMod(this->value.i16, rhs.value.i16);
 		case OperandType::Int32:
-			return (this->value.i32 % rhs.value.i32);
+			return safeMod(this->value.i32, rhs.value.i32);
 		case OperandType::Float:
-			return (fmodf(this->value.f, rhs.value.f));
+			return safeMod(this->value.f, rhs.value.f);
 		case OperandType::Double:
-			return (fmod(this->value.d, rhs.value.d));
+			return safeMod(this->value.d, rhs.value.d);
 		default:
 			//throw OperandValue_BadType();
 			return OperandValue();
