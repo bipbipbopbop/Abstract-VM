@@ -6,12 +6,13 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 11:14:39 by jhache            #+#    #+#             */
-/*   Updated: 2019/06/27 14:17:04 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/02 13:12:57 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Operand.hpp"
 #include <type_traits>
+#include <sstream>
 
 Operand::Operand()
 	: _type(OperandType::Unknown)
@@ -37,17 +38,22 @@ Operand::Operand(OperandValue value)
 }
 
 Operand::Operand(Operand const &src)
+	: _valueStr(src._valueStr), _type(src._type)
+{}
+
+Operand::Operand(Operand &&src)
 {
-	*this = src;
+	std::swap(this->_valueStr, src._valueStr);
+	this->_type = src._type;
 }
 
 Operand::~Operand()
 {}
 
 
-Operand  &Operand::operator=(Operand const &rhs)
+Operand	&Operand::operator=(Operand rhs)
 {
-	this->_valueStr = rhs._valueStr;
+	std::swap(this->_valueStr, rhs._valueStr);
 	this->_type = rhs._type;
 
 	return *this;
@@ -69,8 +75,8 @@ IOperand const		*Operand::operator+(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::convertStr(this->toString(), typeToCast)
-		+ Operand::convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
+		+ Operand::_convertStr(rhs.toString(), typeToCast));
 }
 
 IOperand const		*Operand::operator-(IOperand const &rhs) const
@@ -78,8 +84,8 @@ IOperand const		*Operand::operator-(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::convertStr(this->toString(), typeToCast)
-		- Operand::convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
+		- Operand::_convertStr(rhs.toString(), typeToCast));
 }
 
 IOperand const		*Operand::operator*(IOperand const &rhs) const
@@ -87,8 +93,8 @@ IOperand const		*Operand::operator*(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::convertStr(this->toString(), typeToCast)
-		* Operand::convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
+		* Operand::_convertStr(rhs.toString(), typeToCast));
 }
 
 IOperand const		*Operand::operator/(IOperand const &rhs) const
@@ -96,8 +102,8 @@ IOperand const		*Operand::operator/(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::convertStr(this->toString(), typeToCast)
-		/ Operand::convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
+		/ Operand::_convertStr(rhs.toString(), typeToCast));
 }
 
 IOperand const		*Operand::operator%(IOperand const &rhs) const
@@ -105,8 +111,8 @@ IOperand const		*Operand::operator%(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::convertStr(this->toString(), typeToCast)
-		% Operand::convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
+		% Operand::_convertStr(rhs.toString(), typeToCast));
 }
 
 std::string const	&Operand::toString() const
@@ -114,7 +120,7 @@ std::string const	&Operand::toString() const
 	return this->_valueStr;
 }
 
-OperandValue		Operand::convertStr(std::string const &str, OperandType type)
+OperandValue		Operand::_convertStr(std::string const &str, OperandType type)
 {
 	switch (type)
 	{
@@ -132,4 +138,42 @@ OperandValue		Operand::convertStr(std::string const &str, OperandType type)
 			//throw OperandValue_BadType();
 			return OperandValue();
 	}
+}
+
+Operand				&&Operand::StrToOperand(std::string const &str, OperandType type)
+{
+	union {
+		int8_t	i8;
+		int16_t	i16;
+		int32_t	i32;
+		float	f;
+		double	d;
+	}					testValue;
+	std::istringstream	iss(str);
+
+	switch (type)
+	{
+		case OperandType::Int8:
+			iss >> testValue.i8;
+			break;
+		case OperandType::Int16:
+			iss >> testValue.i16;
+			break;
+		case OperandType::Int32:
+			iss >> testValue.i32;
+			break;
+		case OperandType::Float:
+			iss >> testValue.f;
+			break;
+		case OperandType::Double:
+			iss >> testValue.d;
+			break;
+		default:
+			//throw OperandValue_BadType();
+			std::cerr << "StrToOperand: Bad Type\n";
+	}
+	if (iss.fail())
+;		//throw OperandValue_BadString();
+
+	return std::move(Operand(Operand::_convertStr(str, type)));
 }

@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 14:04:09 by jhache            #+#    #+#             */
-/*   Updated: 2019/06/27 14:16:42 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/02 13:07:26 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ public:
 	Operand();
 	Operand(OperandValue value);
 	Operand(Operand const &src);
+	Operand(Operand &&src);
 	virtual ~Operand();
 
-	Operand						&operator=(Operand const &rhs);
+	Operand						&operator=(Operand rhs);
 
 	virtual int					getPrecision() const;
 	virtual OperandType			getType() const;
@@ -59,9 +60,11 @@ public:
 
 	virtual std::string const	&toString() const;
 
-	static OperandValue			convertStr(std::string const &str, OperandType type);
+	static Operand				&&StrToOperand(std::string const &str, OperandType type);
 
 private:
+	static OperandValue			_convertStr(std::string const &str, OperandType type);
+
 	std::string			_valueStr;
 	OperandType			_type;
 };
