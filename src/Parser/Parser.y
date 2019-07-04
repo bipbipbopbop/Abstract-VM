@@ -9,9 +9,10 @@
 %code requires {
 	# include <iostream>
 	# include <string>
+	# include "Operand.hpp"
 	class Driver;
 }
-%param { driver &drv }
+%param { Driver &drv }
 %locations
 
 %define parse.trace
@@ -60,7 +61,7 @@
 
 %type <OperandType> type
 %type <std::string> literal
-%type <Operand> value
+%type <Operand*> value
 %type <void*> instruction
 
 %printer { yyo << $$; } <*>;
@@ -69,23 +70,25 @@
 %start input;
 
 input:
-	%empty						{ }
+	%empty { }
 	| instruction SEP input		{ drv.pushInstruction($1); }
+	| COMMENT { }
 	| MY_EOF { }
 	;
 
 instruction:
-	PUSH value		{ std::cout << "push\n"; delete $2; $$ = nullptr;/*new Push($2);*/ }
-	| POP			{ std::cout << "pop\n"; $$ = nullptr;/*new Pop();*/ }
-	| DUMP			{ std::cout << "Dump\n"; $$ = nullptr;/*new Dum();*/ }
-	| ASSERT value	{ std::cout << "assert\n"; delete $2; $$ = nullptr;/*new Assert($2);*/ }
-	| ADD			{ std::cout << "add\n"; $$ = nullptr;/*new Add();*/ }
-	| SUB			{ std::cout << "sub\n"; $$ = nullptr;/*new Sub();*/ }
-	| MUL			{ std::cout << "mul\n"; $$ = nullptr;/*new Mul();*/ }
-	| DIV			{ std::cout << "div\n"; $$ = nullptr;/*new Div();*/ }
-	| MOD			{ std::cout << "mod\n"; $$ = nullptr;/*new Mod();*/ }
-	| PRINT			{ std::cout << "print\n"; $$ = nullptr;/*new Print();*/ }
-	| EXIT			{ std::cout << "exit\n"; $$ = nullptr;/*new Exit();*/ }
+	PUSH value		{ std::cout << "this is a push\n"; delete $2; $$ = nullptr;/*new Push($2);*/ }
+	| POP			{ std::cout << "this is a pop\n"; $$ = nullptr;/*new Pop();*/ }
+	| DUMP			{ std::cout << "this is a Dump\n"; $$ = nullptr;/*new Dum();*/ }
+	| ASSERT value	{ std::cout << "this is a assert\n"; delete $2; $$ = nullptr;/*new Assert($2);*/ }
+	| ADD			{ std::cout << "this is a add\n"; $$ = nullptr;/*new Add();*/ }
+	| SUB			{ std::cout << "this is a sub\n"; $$ = nullptr;/*new Sub();*/ }
+	| MUL			{ std::cout << "this is a mul\n"; $$ = nullptr;/*new Mul();*/ }
+	| DIV			{ std::cout << "this is a div\n"; $$ = nullptr;/*new Div();*/ }
+	| MOD			{ std::cout << "this is a mod\n"; $$ = nullptr;/*new Mod();*/ }
+	| PRINT			{ std::cout << "this is a print\n"; $$ = nullptr;/*new Print();*/ }
+	| EXIT			{ std::cout << "this is a exit\n"; $$ = nullptr;/*new Exit();*/ }
+	| instruction COMMENT { }
 	;
 
 value:

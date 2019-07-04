@@ -6,14 +6,14 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:43:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/03 13:03:46 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/04 17:10:13 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Driver.hpp"
 
 Driver::Driver(void *list)
-	_instructionList(list);
+	: trace_parsing(false), trace_scanning(false), _instructionList(list)
 {}
 
 Driver::Driver(Driver const &src)
@@ -29,6 +29,7 @@ Driver::~Driver()
 
 Driver	&Driver::operator=(Driver const &rhs)
 {//no use
+	static_cast<void>(rhs);
 	return *this;
 }
 
@@ -48,30 +49,24 @@ void	Driver::setOperandType(OperandType type)
 	this->_opType = type;
 }
 
-void	Driver::setInstruction(void *inst)
-{
-	this->_inst = inst;
-}
-
 int		Driver::parse(std::string const &fileName)
 {
 	int		result;
 
 	this->_fileName = fileName;
-	location.initialize(&fileName);
-	scan_begin();
+	location.initialize(&this->_fileName);
+	this->_scanBegin();
 
 	yy::parser parser(*this);
-	parse.set_debug_level(false);
+	parser.set_debug_level(false);
 
 	result = parser();
-	scan_end();
+	this->_scanEnd();
 
 	return result;
 }
 
-void	Driver::_scanBegin()
-{}
-
-void	Driver::_scanEnd()
-{}
+void	Driver::pushInstruction(void *inst)
+{
+	this->_instructionList = inst;
+}

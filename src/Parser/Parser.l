@@ -3,10 +3,10 @@
 	#include <cstring>
 	#include <string>
 	#include "Driver.hpp"
-	#include "Parser.hpp"
+	#include "Parser.tab.h"
 %}
 
-%option debug
+%option debug nounput noinput
 
 DIGITS	[0-9]+
 INT		-?{DIGITS}
@@ -14,7 +14,7 @@ FLOAT	-?{DIGITS}\.{DIGITS}+
 
 SEP		[\n]+
 
-COMMENT	;
+COMMENT	;+[^;]+$
 MY_EOF		^;;$
 
 %{
@@ -58,24 +58,24 @@ double		{ return yy::parser::make_DOUBLE(loc); }
 {SEP}		{ loc.lines(yyleng); loc.step(); return yy::parser::make_SEP(loc); }
 {COMMENT}	{ return yy::parser::make_COMMENT(loc); }
 {MY_EOF}	{ return yy::parser::make_END(loc); }
-<<EOF>>		{ return yy::parser::make_END; }
+<<EOF>>		{ return yy::parser::make_END(loc); }
 
 
 %%
 
-void	driver::scan_begin()
+void	Driver::_scanBegin()
 {
 	yy_flex_debug = trace_scanning;
 	if (this->_fileName.empty() || this->_fileName == "-")
 		yyin = stdin;
-	else if (!(yyin = fopen(file.c_str(), "r")))
+	else if (!(yyin = fopen(this->_fileName.c_str(), "r")))
 	{
 		std::cerr << "can't open " << this->_fileName << ": " << strerror(errno) << '\n';
 		exit(EXIT_FAILURE);
 	}
 }
 
-void	driver::scan_end()
+void	Driver::_scanEnd()
 {
 	fclose(yyin);
 }
