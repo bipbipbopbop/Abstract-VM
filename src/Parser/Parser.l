@@ -14,7 +14,7 @@ FLOAT	-?{DIGITS}\.{DIGITS}+
 
 SEP		[\n]+
 
-COMMENT	;+[^;]+$
+COMMENT	;.*$
 MY_EOF		^;;$
 
 %{
@@ -56,8 +56,8 @@ double		{ return yy::parser::make_DOUBLE(loc); }
 \)			{ return yy::parser::make_RPAREN(loc); }
 
 {SEP}		{ loc.lines(yyleng); loc.step(); return yy::parser::make_SEP(loc); }
-{COMMENT}	{ return yy::parser::make_COMMENT(loc); }
 {MY_EOF}	{ return yy::parser::make_END(loc); }
+{COMMENT}	{ return yy::parser::make_COMMENT(loc); }
 <<EOF>>		{ return yy::parser::make_END(loc); }
 
 
@@ -70,7 +70,7 @@ void	Driver::_scanBegin()
 		yyin = stdin;
 	else if (!(yyin = fopen(this->_fileName.c_str(), "r")))
 	{
-		std::cerr << "can't open " << this->_fileName << ": " << strerror(errno) << '\n';
+		std::cout << "can't open " << this->_fileName << ": " << strerror(errno) << '\n';
 		exit(EXIT_FAILURE);
 	}
 }

@@ -72,7 +72,7 @@
 input:
 	%empty { }
 	| instruction SEP input		{ drv.pushInstruction($1); }
-	| COMMENT { }
+	| COMMENT SEP input { }
 	| MY_EOF { }
 	;
 
@@ -88,7 +88,7 @@ instruction:
 	| MOD			{ std::cout << "this is a mod\n"; $$ = nullptr;/*new Mod();*/ }
 	| PRINT			{ std::cout << "this is a print\n"; $$ = nullptr;/*new Print();*/ }
 	| EXIT			{ std::cout << "this is a exit\n"; $$ = nullptr;/*new Exit();*/ }
-	| instruction COMMENT { }
+	| instruction COMMENT { $$ = $1; }
 	;
 
 value:
