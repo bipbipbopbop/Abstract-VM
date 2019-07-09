@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 13:39:04 by jhache            #+#    #+#              #
-#    Updated: 2019/07/08 16:47:27 by jhache           ###   ########.fr        #
+#    Updated: 2019/07/09 09:49:28 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ NAME := abstract_vm
 SRC_PATH := src
 OBJ_PATH := .bin
 INC_PATH := include
-PARSER_PATH := $(SRC_PATH)/Parser
 
 # Commands
 RM := rm -f
@@ -47,12 +46,6 @@ SRC := $(addprefix $(SRC_PATH)/, $(SRC_NAME))
 OBJ := $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.cpp=.o))
 INC := $(addprefix $(INC_PATH)/, $(INC_NAME))
 
-# Parser files
-YACC_SRC := $(addprefix $(PARSER_PATH)/, Parser.y)
-LEX_SRC := $(addprefix $(PARSER_PATH)/, Parser.l)
-
-PARSER_FILES :=	$(addprefix $(INC_PATH)/Parser/, Parser.tab.h location.hh)	\
-				$(addprefix $(PARSER_PATH)/, Parser.cpp lex.yy.cpp)
 
 OBJ_DIRS := $(sort $(dir $(OBJ)))
 INC_DIRS := $(sort $(dir $(INC)))
@@ -70,8 +63,6 @@ all: $(NAME)
 $(NAME): $(OBJ_DIRS) $(OBJ)
 	$(CC) -o $@ $(LDFLAGS) $(OBJ)
 
-#parser:
-#	make -f makefile_parser
 
 $(OBJ_DIRS):
 	@$(MKDIR) $@
@@ -82,12 +73,9 @@ $(OBJ_PATH)/%.o: $(addprefix $(SRC_PATH)/, %.cpp) $(INC)
 clean:
 	$(RM) $(OBJ)
 	$(RMDIR) $(OBJ_DIRS)
-#	make -f makefile_parser clean
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(PARSER_FILES)
-#	make -f makefile_parser fclean
 
 re: fclean all
 
