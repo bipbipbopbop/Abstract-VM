@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:36:05 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/04 17:28:39 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/10 18:04:34 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ public:
 	// those 2 booleans are used for debugging options
 	bool			trace_parsing;
 	bool			trace_scanning;
+
+	// Public because we only want to give it to the Instruction we will create
+	void			*operandStack;//should be a reference to a My_stack class instance
+
 
 private:
 	//intermediate values that is loaded and used during parsing

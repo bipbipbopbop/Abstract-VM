@@ -15,7 +15,7 @@ FLOAT	-?{DIGITS}\.{DIGITS}+
 SEP		[\n]+
 
 COMMENT	;.*$
-MY_EOF		^;;$
+MY_EOF	^;;$
 
 %{
 	// Code run each time a pattern is matched.

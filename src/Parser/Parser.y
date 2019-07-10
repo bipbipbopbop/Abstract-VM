@@ -35,25 +35,25 @@
 
 /* instructions */
 %token
-	PUSH	"push"
-	POP		"pop"
-	DUMP	"dump"
-	ASSERT	"assert"
-	ADD		"add"
-	SUB		"sub"
-	MUL		"mul"
-	DIV		"div"
-	MOD		"mod"
-	PRINT	"print"
-	EXIT	"exit"
+	PUSH		"push"
+	POP			"pop"
+	DUMP		"dump"
+	ASSERT		"assert"
+	ADD			"add"
+	SUB			"sub"
+	MUL			"mul"
+	DIV			"div"
+	MOD			"mod"
+	PRINT		"print"
+	EXIT		"exit"
 
 /* Type specifiers for operands */
 %token
-	INT8			"int8"
-	INT16			"int16"
-	INT32			"int32"
-	FLOAT			"float"
-	DOUBLE			"double"
+	INT8		"int8"
+	INT16		"int16"
+	INT32		"int32"
+	FLOAT		"float"
+	DOUBLE		"double"
 
 /* literal values (from the lexer) */
 %token <std::string> FLOAT_VALUE	"float_value"
@@ -71,24 +71,28 @@
 
 input:
 	%empty { }
-	| instruction SEP input		{ drv.pushInstruction($1); }
-	| COMMENT SEP input { }
+	| instruction custom_eol input { drv.pushInstruction($1); }
+	| custom_eol input { }
 	| MY_EOF { }
 	;
 
+custom_eol:
+	SEP {}
+	| COMMENT SEP {}
+	;
+
 instruction:
-	PUSH value		{ std::cout << "this is a push\n"; delete $2; $$ = nullptr;/*new Push($2);*/ }
-	| POP			{ std::cout << "this is a pop\n"; $$ = nullptr;/*new Pop();*/ }
-	| DUMP			{ std::cout << "this is a Dump\n"; $$ = nullptr;/*new Dum();*/ }
-	| ASSERT value	{ std::cout << "this is a assert\n"; delete $2; $$ = nullptr;/*new Assert($2);*/ }
-	| ADD			{ std::cout << "this is a add\n"; $$ = nullptr;/*new Add();*/ }
-	| SUB			{ std::cout << "this is a sub\n"; $$ = nullptr;/*new Sub();*/ }
-	| MUL			{ std::cout << "this is a mul\n"; $$ = nullptr;/*new Mul();*/ }
-	| DIV			{ std::cout << "this is a div\n"; $$ = nullptr;/*new Div();*/ }
-	| MOD			{ std::cout << "this is a mod\n"; $$ = nullptr;/*new Mod();*/ }
-	| PRINT			{ std::cout << "this is a print\n"; $$ = nullptr;/*new Print();*/ }
-	| EXIT			{ std::cout << "this is a exit\n"; $$ = nullptr;/*new Exit();*/ }
-	| instruction COMMENT { $$ = $1; }
+	PUSH value		{ std::cout << "this is a push\n"; delete $2; $$ = nullptr;/*new Push(drv.operandStack, $2);*/ }
+	| POP			{ std::cout << "this is a pop\n"; $$ = nullptr;/*new Pop(drv.operandStack);*/ }
+	| DUMP			{ std::cout << "this is a Dump\n"; $$ = nullptr;/*new Dum(drv.operandStack);*/ }
+	| ASSERT value	{ std::cout << "this is a assert\n"; delete $2; $$ = nullptr;/*new Assert(drv.operandStack, $2);*/ }
+	| ADD			{ std::cout << "this is a add\n"; $$ = nullptr;/*new Add(drv.operandStack);*/ }
+	| SUB			{ std::cout << "this is a sub\n"; $$ = nullptr;/*new Sub(drv.operandStack);*/ }
+	| MUL			{ std::cout << "this is a mul\n"; $$ = nullptr;/*new Mul(drv.operandStack);*/ }
+	| DIV			{ std::cout << "this is a div\n"; $$ = nullptr;/*new Div(drv.operandStack);*/ }
+	| MOD			{ std::cout << "this is a mod\n"; $$ = nullptr;/*new Mod(drv.operandStack);*/ }
+	| PRINT			{ std::cout << "this is a print\n"; $$ = nullptr;/*new Print(drv.operandStack);*/ }
+	| EXIT			{ std::cout << "this is a exit\n"; $$ = nullptr;/*new Exit(drv.operandStack);*/ }
 	;
 
 value:

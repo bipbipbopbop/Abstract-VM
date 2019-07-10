@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 13:39:04 by jhache            #+#    #+#              #
-#    Updated: 2019/07/09 09:49:28 by jhache           ###   ########.fr        #
+#    Updated: 2019/07/10 17:59:18 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ MKDIR := mkdir -p
 
 
 # Sources files
-SRC_NAME :=	main.cpp
+SRC_NAME :=	main.cpp					\
+			AbstractVM.cpp
 SRC_NAME += Operand/Operand.cpp			\
 			Operand/OperandType.cpp		\
 			Operand/OperandValue.cpp
@@ -32,7 +33,7 @@ SRC_NAME +=	Parser/lex.yy.cpp			\
 			Parser/Parser.cpp			\
 			Parser/Driver.cpp
 
-INC_NAME :=
+INC_NAME :=	AbstractVM.hpp
 INC_NAME += Operand/IOperand.hpp		\
 			Operand/Operand.hpp			\
 			Operand/OperandType.hpp		\
