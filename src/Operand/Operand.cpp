@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 11:14:39 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/02 13:12:57 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/15 12:17:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ IOperand const		*Operand::operator+(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
-		+ Operand::_convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::convertStr(this->toString(), typeToCast)
+		+ Operand::convertStr(rhs.toString(), typeToCast));
 }
 
 IOperand const		*Operand::operator-(IOperand const &rhs) const
@@ -84,8 +84,8 @@ IOperand const		*Operand::operator-(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
-		- Operand::_convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::convertStr(this->toString(), typeToCast)
+		- Operand::convertStr(rhs.toString(), typeToCast));
 }
 
 IOperand const		*Operand::operator*(IOperand const &rhs) const
@@ -93,8 +93,8 @@ IOperand const		*Operand::operator*(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
-		* Operand::_convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::convertStr(this->toString(), typeToCast)
+		* Operand::convertStr(rhs.toString(), typeToCast));
 }
 
 IOperand const		*Operand::operator/(IOperand const &rhs) const
@@ -102,8 +102,8 @@ IOperand const		*Operand::operator/(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
-		/ Operand::_convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::convertStr(this->toString(), typeToCast)
+		/ Operand::convertStr(rhs.toString(), typeToCast));
 }
 
 IOperand const		*Operand::operator%(IOperand const &rhs) const
@@ -111,8 +111,8 @@ IOperand const		*Operand::operator%(IOperand const &rhs) const
 	const OperandType	typeToCast =
 		this->getPrecision() >= rhs.getPrecision() ? this->getType() : rhs.getType();
 	
-	return new Operand(Operand::_convertStr(this->toString(), typeToCast)
-		% Operand::_convertStr(rhs.toString(), typeToCast));
+	return new Operand(Operand::convertStr(this->toString(), typeToCast)
+		% Operand::convertStr(rhs.toString(), typeToCast));
 }
 
 std::string const	&Operand::toString() const
@@ -120,7 +120,7 @@ std::string const	&Operand::toString() const
 	return this->_valueStr;
 }
 
-OperandValue		Operand::_convertStr(std::string const &str, OperandType type)
+OperandValue		Operand::convertStr(std::string const &str, OperandType type)
 {
 	switch (type)
 	{
@@ -140,7 +140,7 @@ OperandValue		Operand::_convertStr(std::string const &str, OperandType type)
 	}
 }
 
-Operand				&&Operand::StrToOperand(std::string const &str, OperandType type)
+Operand				*Operand::StrToOperand(std::string const &str, OperandType type)
 {
 	union {
 		int8_t	i8;
@@ -175,5 +175,5 @@ Operand				&&Operand::StrToOperand(std::string const &str, OperandType type)
 	if (iss.fail())
 ;		//throw OperandValue_BadString();
 
-	return std::move(Operand(Operand::_convertStr(str, type)));
+	return new Operand(Operand::convertStr(str, type));
 }

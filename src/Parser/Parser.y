@@ -82,21 +82,21 @@ custom_eol:
 	;
 
 instruction:
-	PUSH value		{ std::cout << "this is a push\n"; delete $2; $$ = nullptr;/*new Push(drv.operandStack, $2);*/ }
-	| POP			{ std::cout << "this is a pop\n"; $$ = nullptr;/*new Pop(drv.operandStack);*/ }
-	| DUMP			{ std::cout << "this is a Dump\n"; $$ = nullptr;/*new Dum(drv.operandStack);*/ }
-	| ASSERT value	{ std::cout << "this is a assert\n"; delete $2; $$ = nullptr;/*new Assert(drv.operandStack, $2);*/ }
-	| ADD			{ std::cout << "this is a add\n"; $$ = nullptr;/*new Add(drv.operandStack);*/ }
-	| SUB			{ std::cout << "this is a sub\n"; $$ = nullptr;/*new Sub(drv.operandStack);*/ }
-	| MUL			{ std::cout << "this is a mul\n"; $$ = nullptr;/*new Mul(drv.operandStack);*/ }
-	| DIV			{ std::cout << "this is a div\n"; $$ = nullptr;/*new Div(drv.operandStack);*/ }
-	| MOD			{ std::cout << "this is a mod\n"; $$ = nullptr;/*new Mod(drv.operandStack);*/ }
-	| PRINT			{ std::cout << "this is a print\n"; $$ = nullptr;/*new Print(drv.operandStack);*/ }
-	| EXIT			{ std::cout << "this is a exit\n"; $$ = nullptr;/*new Exit(drv.operandStack);*/ }
+	PUSH value		{ std::cout << "this is a push\n"; delete $2; $$ = nullptr;/*new Push($2);*/ }
+	| POP			{ std::cout << "this is a pop\n"; $$ = nullptr;/*new Pop();*/ }
+	| DUMP			{ std::cout << "this is a Dump\n"; $$ = nullptr;/*new Dum();*/ }
+	| ASSERT value	{ std::cout << "this is a assert\n"; delete $2; $$ = nullptr;/*new Assert($2);*/ }
+	| ADD			{ std::cout << "this is a add\n"; $$ = nullptr;/*new Add();*/ }
+	| SUB			{ std::cout << "this is a sub\n"; $$ = nullptr;/*new Sub();*/ }
+	| MUL			{ std::cout << "this is a mul\n"; $$ = nullptr;/*new Mul();*/ }
+	| DIV			{ std::cout << "this is a div\n"; $$ = nullptr;/*new Div();*/ }
+	| MOD			{ std::cout << "this is a mod\n"; $$ = nullptr;/*new Mod();*/ }
+	| PRINT			{ std::cout << "this is a print\n"; $$ = nullptr;/*new Print();*/ }
+	| EXIT			{ std::cout << "this is a exit\n"; $$ = nullptr;/*new Exit();*/ }
 	;
 
 value:
-	type LPAREN literal RPAREN	{ $$ = new Operand(Operand::StrToOperand($3, $1)); }
+	type LPAREN literal RPAREN	{ $$ = Operand::StrToOperand($3, $1); }
 	;
 
 literal:

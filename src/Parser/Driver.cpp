@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:43:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/04 17:10:13 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/11 10:24:23 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ Driver::Driver(Driver const &src)
 Driver::~Driver()
 {
 	delete this->_op;
-	//delete this->_inst;
 }
 
 

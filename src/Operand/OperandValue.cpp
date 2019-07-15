@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 12:05:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/02 13:16:14 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/15 12:23:48 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,4 +145,32 @@ OperandValue	OperandValue::operator%(OperandValue const &rhs) const
 			//throw OperandValue_BadType();
 			return OperandValue();
 	}
+}
+
+
+bool	OperandValue::operator==(OperandValue const &rhs) const
+{
+	OperandType	typeToCast = rhs.type > this->type ? rhs.type : this->type;
+
+	switch (typeToCast)
+	{
+		case OperandType::Int8:
+			return this->value.i8 == rhs.value.i8;
+		case OperandType::Int16:
+			return this->value.i16 == rhs.value.i16;
+		case OperandType::Int32:
+			return this->value.i32 == rhs.value.i32;
+		case OperandType::Float:
+			return this->value.f == rhs.value.f;
+		case OperandType::Double:
+			return this->value.d == rhs.value.d;
+		default:
+			//throw OperandValue_BadType();
+			return false;
+	}
+}
+
+bool	OperandValue::operator!=(OperandValue const &rhs) const
+{
+	return !(this->operator==(rhs));
 }

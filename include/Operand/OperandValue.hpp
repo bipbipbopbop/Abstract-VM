@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 11:58:19 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/02 13:24:53 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/15 12:20:29 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ struct	OperandValue
 	OperandValue	operator*(OperandValue const &rhs) const;
 	OperandValue	operator/(OperandValue const &rhs) const;
 	OperandValue	operator%(OperandValue const &rhs) const;
+	bool			operator==(OperandValue const &rhs) const;
+	bool			operator!=(OperandValue const &rhs) const;
 
 	union
 	{
@@ -228,7 +230,6 @@ struct	OperandValue
 			return fmod(lhs, rhs);
 		}
 	}
-
 };
 
 #endif // OPERANDVALUE_HPP
