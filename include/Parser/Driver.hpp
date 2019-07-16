@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:36:05 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 15:40:06 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 16:14:24 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,11 @@
 class Driver
 {
 public:
-	Driver(void *list = nullptr);
+	Driver(InstructionContainer &list);
 	Driver(Driver const &src);
 	~Driver();
 
 	Driver	&operator=(Driver const &rhs);
-
-	void	setStr(std::string str);
-	void	setOperand(Operand *op);
-	void	setOperandType(OperandType type);
 
 	int		parse(std::string const &fileName);
 	void	pushInstruction(IInstruction *inst);

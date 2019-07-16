@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:43:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/11 10:24:23 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 16:13:56 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,6 @@ Driver	&Driver::operator=(Driver const &rhs)
 	return *this;
 }
 
-
-void	Driver::setStr(std::string str)
-{
-	std::swap(this->_str, str);
-}
-
-void	Driver::setOperand(Operand *op)
-{
-	this->_op = op;
-}
-
-void	Driver::setOperandType(OperandType type)
-{
-	this->_opType = type;
-}
-
 int		Driver::parse(std::string const &fileName)
 {
 	int		result;
@@ -65,7 +49,7 @@ int		Driver::parse(std::string const &fileName)
 	return result;
 }
 
-void	Driver::pushInstruction(void *inst)
+void	Driver::pushInstruction(IInstruction *inst)
 {
-	this->_instructionList = inst;
+	this->_instructionList.push_back(inst);
 }

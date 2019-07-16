@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:45:54 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 15:21:41 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 16:14:51 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		AbstractVM::execute()
 		catch (std::exception &e)
 		{
 			std::cout << "kek: " << e.what() << std::endl;
-			exit();
+			exit(0);
 		}
 	}
 }
