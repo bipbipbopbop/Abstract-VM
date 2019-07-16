@@ -6,10 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 13:44:40 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/02 13:31:28 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 16:31:01 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "AbstractVM.hpp"
+/*
 #include <iostream>
 #include "Operand.hpp"
 #include <cfenv>
@@ -108,14 +110,17 @@ void	operand_test(void)
 	else
 		std::cout << "??? type == " << res.type << std::endl;
 }
+*/
 
-int		main(void)
+int		main(int ac, char **av)
 {
-	std::cout << "hello World!" << std::endl;
+	AbstractVM	vm;
 
-	operand_test();
-	//builtin_intoverflow_test();
-	//float_flags_test();
+	if (ac <= 1)
+		return EXIT_SUCCESS;
+
+	vm.parse(av[1]);
+	vm.execute();
 
 	return 0;
 }
