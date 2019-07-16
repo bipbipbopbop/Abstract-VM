@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 13:39:04 by jhache            #+#    #+#              #
-#    Updated: 2019/07/16 16:15:39 by jhache           ###   ########.fr        #
+#    Updated: 2019/07/16 16:21:08 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,7 @@ re: fclean all
 
 testParser:
 	$(CC) -c src/Parser/mainParser.cpp -o .bin/Parser/mainParser.o $(CCFLAGS) $(INCFLAGS)
-	$(CC) -o Parser $(addprefix $(OBJ_PATH)/, Parser/* Operand/*) -ll
+	$(CC) -o Parser $(addprefix $(OBJ_PATH)/, Parser/* Operand/* Instruction/*) -ll
 
 
 .PHONY: all clean fclean re

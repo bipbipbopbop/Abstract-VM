@@ -10,6 +10,17 @@
 	# include <iostream>
 	# include <string>
 	# include "Operand.hpp"
+	# include "Add.hpp"
+	# include "Assert.hpp"
+	# include "Div.hpp"
+	# include "Dump.hpp"
+	# include "Exit.hpp"
+	# include "Mod.hpp"
+	# include "Mul.hpp"
+	# include "Pop.hpp"
+	# include "Print.hpp"
+	# include "Push.hpp"
+	# include "Sub.hpp"
 	class Driver;
 }
 %param { Driver &drv }
@@ -62,7 +73,7 @@
 %type <OperandType> type
 %type <std::string> literal
 %type <Operand*> value
-%type <void*> instruction
+%type <IInstruction*> instruction
 
 %printer { yyo << $$; } <*>;
 
@@ -82,17 +93,17 @@ custom_eol:
 	;
 
 instruction:
-	PUSH value		{ std::cout << "this is a push\n"; delete $2; $$ = nullptr;/*new Push($2);*/ }
-	| POP			{ std::cout << "this is a pop\n"; $$ = nullptr;/*new Pop();*/ }
-	| DUMP			{ std::cout << "this is a Dump\n"; $$ = nullptr;/*new Dum();*/ }
-	| ASSERT value	{ std::cout << "this is a assert\n"; delete $2; $$ = nullptr;/*new Assert($2);*/ }
-	| ADD			{ std::cout << "this is a add\n"; $$ = nullptr;/*new Add();*/ }
-	| SUB			{ std::cout << "this is a sub\n"; $$ = nullptr;/*new Sub();*/ }
-	| MUL			{ std::cout << "this is a mul\n"; $$ = nullptr;/*new Mul();*/ }
-	| DIV			{ std::cout << "this is a div\n"; $$ = nullptr;/*new Div();*/ }
-	| MOD			{ std::cout << "this is a mod\n"; $$ = nullptr;/*new Mod();*/ }
-	| PRINT			{ std::cout << "this is a print\n"; $$ = nullptr;/*new Print();*/ }
-	| EXIT			{ std::cout << "this is a exit\n"; $$ = nullptr;/*new Exit();*/ }
+	PUSH value		{ std::cout << "this is a push\n"; $$ = new Push($2); }
+	| POP			{ std::cout << "this is a pop\n"; $$ = new Pop(); }
+	| DUMP			{ std::cout << "this is a Dump\n"; $$ = new Dump(); }
+	| ASSERT value	{ std::cout << "this is a assert\n"; $$ = new Assert($2); }
+	| ADD			{ std::cout << "this is a add\n"; $$ = new Add(); }
+	| SUB			{ std::cout << "this is a sub\n"; $$ = new Sub(); }
+	| MUL			{ std::cout << "this is a mul\n"; $$ = new Mul(); }
+	| DIV			{ std::cout << "this is a div\n"; $$ = new Div(); }
+	| MOD			{ std::cout << "this is a mod\n"; $$ = new Mod(); }
+	| PRINT			{ std::cout << "this is a print\n"; $$ = new Print(); }
+	| EXIT			{ std::cout << "this is a exit\n"; $$ = new Exit(); }
 	;
 
 value:
@@ -120,8 +131,3 @@ yy::parser::error (const location_type& l, const std::string& m)
 {
   std::cerr << l << ": " << m << '\n';
 }
-/*
-int	main(void)
-{
-	yyparse();
-}*/

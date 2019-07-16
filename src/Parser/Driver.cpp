@@ -6,13 +6,13 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:43:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 16:13:56 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 16:19:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Driver.hpp"
 
-Driver::Driver(void *list)
+Driver::Driver(InstructionContainer &list)
 	: trace_parsing(false), trace_scanning(false), _instructionList(list)
 {}
 
@@ -21,9 +21,7 @@ Driver::Driver(Driver const &src)
 {}
 
 Driver::~Driver()
-{
-	delete this->_op;
-}
+{}
 
 
 Driver	&Driver::operator=(Driver const &rhs)
