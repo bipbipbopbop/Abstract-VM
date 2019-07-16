@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:45:54 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 14:24:35 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 15:21:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 
 AbstractVM::AbstractVM()
-	: /*_instructionList(), */_stack(), _parser(/*this->_instructionList*/)
+	: _instructionList(), _stack(), _parser(this->_instructionList)
 {}
 
 AbstractVM::AbstractVM(AbstractVM const &src)
-	: /*_instructionList(), */_stack(), _parser(/*this->_instructionList*/)
+	: _instructionList(), _stack(), _parser(this->_instructionList)
 {
 	*this = src;
 }
@@ -49,18 +49,17 @@ bool		AbstractVM::parse(std::string const &filename)
 
 void		AbstractVM::execute()
 {
-/*
-	for (auto it = this->_instructionList.begin(); it != this->_instructionList.end(); ++it)
+	for (auto * instruction : this->_instructionList)
 	{
 		try
 		{
-			it->execute(this->_stack);
+			instruction->execute(this->_stack);
 		}
+//		catch (Exit_Exception &exit)
 		catch (std::exception &e)
 		{
 			std::cout << "kek: " << e.what() << std::endl;
 			exit();
 		}
 	}
-*/
 }

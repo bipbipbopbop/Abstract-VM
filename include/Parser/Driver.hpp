@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:36:05 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/11 10:24:28 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 15:40:06 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "Operand.hpp"
 # include "Parser.tab.h"
+# include "InstructionContainer.hpp"
+# include "IInstruction.hpp"
 
 class Driver
 {
@@ -30,7 +32,7 @@ public:
 	void	setOperandType(OperandType type);
 
 	int		parse(std::string const &fileName);
-	void	pushInstruction(void *inst);//should be a Instruction class pointer
+	void	pushInstruction(IInstruction *inst);
 
 	// set as public because it is used by the parser/lexer, not by me
 	yy::location	location;
@@ -39,15 +41,10 @@ public:
 	bool			trace_scanning;
 
 private:
-	//intermediate values that is loaded and used during parsing
-	std::string		_str;
-	Operand			*_op;
-	OperandType		_opType;
+	// the container that will load the parsed data
+	InstructionContainer	&_instructionList;
 
-	// the list that will load the parsed data
-	void			*_instructionList;//should be a reference to a InstructionList class instance
-
-	std::string		_fileName;
+	std::string				_fileName;
 
 	// those 2 functions are implemented in the corresponding .l files
 	void	_scanBegin();
