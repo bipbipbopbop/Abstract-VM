@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 11:49:32 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:34:02 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:26:57 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ public:
 
 	Push 	&operator=(Push rhs);
 
-	void	execute(/*My_stack &stack*/) override;
+	void	execute(VMStack &stack) override;
 
 private:
 	IOperand	*_value;

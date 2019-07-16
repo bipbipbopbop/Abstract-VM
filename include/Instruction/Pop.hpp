@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 11:47:10 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:34:02 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:26:51 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ public:
 	Pop();
 	~Pop() override;
 
-	void	execute(/*My_stack &stack*/) override;
+	void	execute(VMStack &stack) override;
 };
 
 #endif // POP_HPP

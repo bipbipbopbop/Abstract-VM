@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 10:29:24 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:34:02 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:26:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ public:
 	Add();
 	~Add() override;
 
-	void	execute(/*My_stack &stack*/) override;
+	void	execute(VMStack &stack) override;
 };
 
 #endif // ADD_HPP

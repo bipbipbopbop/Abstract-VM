@@ -6,19 +6,21 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 10:25:33 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:34:02 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:26:20 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IINSTRUCTION_HPP
 # define IINSTRUCTION_HPP
 
+# include "VMStack.hpp"
+
 class IInstruction
 {
 public:
 	virtual ~IInstruction() {}
 
-	virtual void	execute(/*My_stack &stack*/) = 0;
+	virtual void	execute(VMStack &stack) = 0;
 };
 
 #endif // IINSTRUCTION_HPP

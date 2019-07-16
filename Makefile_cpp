@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 13:39:04 by jhache            #+#    #+#              #
-#    Updated: 2019/07/15 15:41:26 by jhache           ###   ########.fr        #
+#    Updated: 2019/07/16 14:23:02 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ SRC_NAME += Instruction/Add.cpp				\
 			Instruction/Push.cpp			\
 			Instruction/Sub.cpp
 
-INC_NAME :=	AbstractVM.hpp
+INC_NAME :=	AbstractVM.hpp					\
+			VMStack.hpp
 INC_NAME += Operand/IOperand.hpp			\
 			Operand/Operand.hpp				\
 			Operand/OperandType.hpp			\

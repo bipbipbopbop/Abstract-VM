@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 15:42:46 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:43:13 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:39:34 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ Dump::Dump()
 Dump::~Dump()
 {}
 
-/*
-void	Dump::execute(My_stack &stack)
+
+void	Dump::execute(VMStack &stack)
 {
 	if (stack.size() < 1)
-		throw Instruction_NoOperandInStack();
+		;//throw Instruction_NoOperandInStack();
 
 	for (auto operand : stack)
 		std::cout << operand->toString() << std::endl;
 }
-*/

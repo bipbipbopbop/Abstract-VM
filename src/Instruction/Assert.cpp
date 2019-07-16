@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 12:06:39 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:44:39 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:47:41 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,16 @@ Assert	&Assert::operator=(Assert rhs)
 	return *this;
 }
 
-/*
-void	Assert::execute(My_stack &stack)
+
+void	Assert::execute(VMStack &stack)
 {
 	if (this->_value == nullptr)
-		throw Instruction_WrongOperandPtr();
-	else if (stack.size < 1)
-		throw Instruction_NoOperandInStack();
+		;//throw Instruction_WrongOperandPtr();
+	else if (stack.size() < 1)
+		;//throw Instruction_NoOperandInStack();
 
-	IOperand const	*stackTop = *stack.begin();
+	IOperand const	*stackTop = stack.top();
 	if (Operand::convertStr(stackTop->toString(), stackTop->getType())
-			!= Operand::convertStr(this->value->toString(), this->value->getType()))
-		throw Instruction_AssertFailed();
+			!= Operand::convertStr(this->_value->toString(), this->_value->getType()))
+		;//throw Instruction_AssertFailed();
 }
-*/

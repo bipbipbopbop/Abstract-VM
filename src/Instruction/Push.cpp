@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 11:53:43 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:34:02 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:44:16 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ Push	&Push::operator=(Push rhs)
 	return *this;
 }
 
-/*
-void	Push::execute(My_stack &stack)
+
+void	Push::execute(VMStack &stack)
 {
 	if (this->_value == nullptr)
-		throw Instruction_WrongOperandPtr();
+		;//throw Instruction_WrongOperandPtr();
+
 	stack.push(this->_value);
 }
-*/

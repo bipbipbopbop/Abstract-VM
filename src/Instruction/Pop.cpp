@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 11:48:32 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:34:02 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:42:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ Pop::Pop()
 Pop::~Pop()
 {}
 
-/*
-void	Pop::execute(My_stack &stack)
+
+void	Pop::execute(VMStack &stack)
 {
 	if (stack.size() < 1)
-		throw Instruction_NoOperandInStack();
+		;//throw Instruction_NoOperandInStack();
 
-	delete stack.pop();
+	delete stack.top();
+	stack.pop();
 }
-*/

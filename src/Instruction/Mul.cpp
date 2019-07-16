@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:56:48 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 15:34:02 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:41:51 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,20 @@ Mul::Mul()
 Mul::~Mul()
 {}
 
-/*
-void	Mul::execute(My_stack &stack)
+
+void	Mul::execute(VMStack &stack)
 {
 	if (stack.size() < 2)
-		throw Instruction_NoOperandInStack();
+		;//throw Instruction_NoOperandInStack();
 
-	IOperand	*a = stack.pop();
-	IOperand	*b = stack.pop();
+	const IOperand	*a = stack.top();
+	stack.pop();
 
-	stack.push(a->operator*(b));
+	const IOperand	*b = stack.top();
+	stack.pop();
+
+	stack.push(a->operator*(*b));
 
 	delete a;
 	delete b;
 }
-*/

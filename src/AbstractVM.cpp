@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:45:54 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/10 18:01:43 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/16 14:24:35 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 
 AbstractVM::AbstractVM()
-	: /*_instructionList(), _stack(), */_parser(/*this->_instructionList*/)
+	: /*_instructionList(), */_stack(), _parser(/*this->_instructionList*/)
 {}
 
 AbstractVM::AbstractVM(AbstractVM const &src)
-	: /*_instructionList(), _stack(), */_parser(/*this->_instructionList*/)
+	: /*_instructionList(), */_stack(), _parser(/*this->_instructionList*/)
 {
 	*this = src;
 }
@@ -54,7 +54,7 @@ void		AbstractVM::execute()
 	{
 		try
 		{
-			it->execute();
+			it->execute(this->_stack);
 		}
 		catch (std::exception &e)
 		{
