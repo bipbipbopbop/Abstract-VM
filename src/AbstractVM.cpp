@@ -6,12 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:45:54 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 16:14:51 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/17 19:12:00 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AbstractVM.hpp"
-
+#include "InstructionException.hpp"
 
 AbstractVM::AbstractVM()
 	: _instructionList(), _stack(), _parser(this->_instructionList)
@@ -53,13 +53,19 @@ void		AbstractVM::execute()
 	{
 		try
 		{
+			if (this->_stack.has_exited)
+				throw Instruction_Exit("Exit must be the last instruction.");
 			instruction->execute(this->_stack);
 		}
-//		catch (Exit_Exception &exit)
 		catch (std::exception &e)
 		{
-			std::cout << "kek: " << e.what() << std::endl;
-			exit(0);
+			std::cout << e.what() << std::endl;
+			exit(EXIT_FAILURE);
 		}
+	}
+	if (!this->_stack.has_exited)
+	{
+		std::cout << "Error: No Exit in the instruction list." << std::endl;
+		exit(EXIT_FAILURE);
 	}
 }

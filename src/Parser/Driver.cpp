@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:43:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 16:19:41 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/17 17:35:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int		Driver::parse(std::string const &fileName)
 
 void	Driver::pushInstruction(IInstruction *inst)
 {
-	this->_instructionList.push_back(inst);
+	// push_front because the parser work recursively,
+	// so it start by the last instruction
+	this->_instructionList.push_front(inst);
 }

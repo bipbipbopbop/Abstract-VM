@@ -6,13 +6,14 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 11:58:19 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 12:20:29 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/17 16:45:39 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OPERANDVALUE_HPP
 # define OPERANDVALUE_HPP
 
+# include "OperandValueException.hpp"
 # include "OperandType.hpp"
 # include <type_traits>
 # include <cinttypes>
@@ -94,7 +95,7 @@ struct	OperandValue
 		if constexpr (std::is_integral<ArithmeticT>::value)
 		{
 			if (__builtin_add_overflow(lhs, rhs, &result))
-;//				throw OperandValue_Overflow();
+				throw OperandValue_Overflow("Instruction add Failed");
 
 			return result;
 		}
@@ -104,9 +105,9 @@ struct	OperandValue
 
 			result = lhs + rhs;
 			if (fetestexcept(FE_OVERFLOW))
-;//				throw OperandValue_Overflow();
+				throw OperandValue_Overflow("Instruction add Failed");
 			else if (fetestexcept(FE_UNDERFLOW))
-;//				throw OperandValue_Underflow();
+;//				throw OperandValue_Underflow("Instruction add Failed");
 
 			return result;
 		}
@@ -122,7 +123,7 @@ struct	OperandValue
 		if constexpr (std::is_integral<ArithmeticT>::value)
 		{
 			if (__builtin_sub_overflow(lhs, rhs, &result))
-;//				throw OperandValue_Overflow();
+				throw OperandValue_Overflow("Instruction sub Failed");
 
 			return result;
 		}
@@ -132,9 +133,9 @@ struct	OperandValue
 
 			result = lhs - rhs;
 			if (fetestexcept(FE_OVERFLOW))
-;//				throw OperandValue_Overflow();
+				throw OperandValue_Overflow("Instruction sub Failed");
 			else if (fetestexcept(FE_UNDERFLOW))
-;//				throw OperandValue_Underflow();
+;//				throw OperandValue_Underflow("Instruction sub Failed");
 
 			return result;
 		}
@@ -150,7 +151,7 @@ struct	OperandValue
 		if constexpr (std::is_integral<ArithmeticT>::value)
 		{
 			if (__builtin_mul_overflow(lhs, rhs, &result))
-;//				throw OperandValue_Overflow();
+				throw OperandValue_Overflow("Instruction mul Failed");
 
 			return result;
 		}
@@ -160,9 +161,9 @@ struct	OperandValue
 
 			result = lhs * rhs;
 			if (fetestexcept(FE_OVERFLOW))
-;//				throw OperandValue_Overflow();
+				throw OperandValue_Overflow("Instruction mul Failed");
 			else if (fetestexcept(FE_UNDERFLOW))
-;//				throw OperandValue_Underflow();
+;//				throw OperandValue_Underflow("Instruction mul Failed");
 
 			return result;
 		}
@@ -177,9 +178,9 @@ struct	OperandValue
 		if constexpr (std::is_integral<ArithmeticT>::value)
 		{
 			if (rhs == 0)
-;//				throw OperandValue_DivisionByZero();
+				throw OperandValue_DivisionByZero("Instruction div Failed");
 			if (lhs == std::numeric_limits<ArithmeticT>::min() && rhs == -1)
-;//				throw OperandValue_Overflow();
+				throw OperandValue_Overflow("Instruction div Failed");
 
 			return lhs / rhs;
 		}
@@ -188,15 +189,15 @@ struct	OperandValue
 			ArithmeticT			result;
 
 			if (rhs == static_cast<ArithmeticT>(0.))
-;//				throw OperandValue_DivisionByZero();
+				throw OperandValue_DivisionByZero("Instruction div Failed");
 
 			feclearexcept(FE_OVERFLOW | FE_UNDERFLOW);
 
 			result = lhs / rhs;
 			if (fetestexcept(FE_OVERFLOW))
-;//				throw OperandValue_Overflow();
+				throw OperandValue_Overflow("Instruction div Failed");
 			else if (fetestexcept(FE_UNDERFLOW))
-;//				throw OperandValue_Underflow();
+;//				throw OperandValue_Underflow("Instruction div Failed");
 
 			return result;
 		}
@@ -211,21 +212,21 @@ struct	OperandValue
 		if constexpr (std::is_integral<ArithmeticT>::value)
 		{
 			if (rhs == 0)
-;//				throw OperandValue_ModuloByZero();
+				throw OperandValue_ModuloByZero("Instruction mod Failed");
 
 			return lhs % rhs;
 		}
 		else if constexpr (std::is_same<ArithmeticT, float>::value)
 		{
 			if (rhs == 0.f)
-;//				throw OperandValue_ModuloByZero();
+				throw OperandValue_ModuloByZero("Instruction mod Failed");
 
 			return fmodf(lhs, rhs);
 		}
 		else
 		{
 			if (rhs == 0.)
-;//				throw OperandValue_ModuloByZero();
+				throw OperandValue_ModuloByZero("Instruction mod Failed");
 
 			return fmod(lhs, rhs);
 		}

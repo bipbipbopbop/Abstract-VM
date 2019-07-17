@@ -93,17 +93,17 @@ custom_eol:
 	;
 
 instruction:
-	PUSH value		{ std::cout << "this is a push\n"; $$ = new Push($2); }
-	| POP			{ std::cout << "this is a pop\n"; $$ = new Pop(); }
-	| DUMP			{ std::cout << "this is a Dump\n"; $$ = new Dump(); }
-	| ASSERT value	{ std::cout << "this is a assert\n"; $$ = new Assert($2); }
-	| ADD			{ std::cout << "this is a add\n"; $$ = new Add(); }
-	| SUB			{ std::cout << "this is a sub\n"; $$ = new Sub(); }
-	| MUL			{ std::cout << "this is a mul\n"; $$ = new Mul(); }
-	| DIV			{ std::cout << "this is a div\n"; $$ = new Div(); }
-	| MOD			{ std::cout << "this is a mod\n"; $$ = new Mod(); }
-	| PRINT			{ std::cout << "this is a print\n"; $$ = new Print(); }
-	| EXIT			{ std::cout << "this is a exit\n"; $$ = new Exit(); }
+	PUSH value		{ $$ = new Push($2); }
+	| POP			{ $$ = new Pop(); }
+	| DUMP			{ $$ = new Dump(); }
+	| ASSERT value	{ $$ = new Assert($2); }
+	| ADD			{ $$ = new Add(); }
+	| SUB			{ $$ = new Sub(); }
+	| MUL			{ $$ = new Mul(); }
+	| DIV			{ $$ = new Div(); }
+	| MOD			{ $$ = new Mod(); }
+	| PRINT			{ $$ = new Print(); }
+	| EXIT			{ $$ = new Exit(); }
 	;
 
 value:

@@ -6,11 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 11:53:43 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 14:44:16 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/17 17:10:02 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Push.hpp"
+#include "InstructionException.hpp"
 
 Push::Push()
 	: _value(nullptr)
@@ -46,7 +47,7 @@ Push	&Push::operator=(Push rhs)
 void	Push::execute(VMStack &stack)
 {
 	if (this->_value == nullptr)
-		;//throw Instruction_WrongOperandPtr();
+		throw Instruction_WrongOpPtr("Instruction push failed");
 
 	stack.push(this->_value);
 }

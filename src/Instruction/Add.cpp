@@ -6,11 +6,12 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 10:34:52 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 14:37:50 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/17 17:11:07 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Add.hpp"
+#include "InstructionException.hpp"
 
 Add::Add()
 {}
@@ -22,7 +23,7 @@ Add::~Add()
 void	Add::execute(VMStack &stack)
 {
 	if (stack.size() < 2)
-		;//throw Instruction_NoOperandInStack();
+		throw Instruction_NoOpInStack("Instruction add failed");
 
 	const IOperand	*a = stack.top();
 	stack.pop();

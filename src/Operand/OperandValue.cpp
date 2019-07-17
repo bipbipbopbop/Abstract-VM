@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 12:05:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/15 12:23:48 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/17 14:29:54 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ OperandValue	OperandValue::operator+(OperandValue const &rhs) const
 		case OperandType::Double:
 			return safeAdd(this->value.d, rhs.value.d);
 		default:
-			//throw OperandValue_BadType();
-			return OperandValue();
+			throw OperandValue_BadType();
 	}
 }
 
@@ -82,8 +81,7 @@ OperandValue	OperandValue::operator-(OperandValue const &rhs) const
 		case OperandType::Double:
 			return safeSub(this->value.d, rhs.value.d);
 		default:
-			//throw OperandValue_BadType();
-			return OperandValue();
+			throw OperandValue_BadType();
 	}
 }
 
@@ -102,8 +100,7 @@ OperandValue	OperandValue::operator*(OperandValue const &rhs) const
 		case OperandType::Double:
 			return safeMul(this->value.d, rhs.value.d);
 		default:
-			//throw OperandValue_BadType();
-			return OperandValue();
+			throw OperandValue_BadType();
 	}
 }
 
@@ -122,8 +119,7 @@ OperandValue	OperandValue::operator/(OperandValue const &rhs) const
 		case OperandType::Double:
 			return safeDiv(this->value.d, rhs.value.d);
 		default:
-			//throw OperandValue_BadType();
-			return OperandValue();
+			throw OperandValue_BadType();
 	}
 }
 
@@ -142,8 +138,7 @@ OperandValue	OperandValue::operator%(OperandValue const &rhs) const
 		case OperandType::Double:
 			return safeMod(this->value.d, rhs.value.d);
 		default:
-			//throw OperandValue_BadType();
-			return OperandValue();
+			throw OperandValue_BadType();
 	}
 }
 
@@ -165,8 +160,7 @@ bool	OperandValue::operator==(OperandValue const &rhs) const
 		case OperandType::Double:
 			return this->value.d == rhs.value.d;
 		default:
-			//throw OperandValue_BadType();
-			return false;
+			throw OperandValue_BadType();
 	}
 }
 

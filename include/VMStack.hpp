@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:02:48 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 14:48:54 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/17 17:22:56 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ public:
 		return this->c.crend();
 	}
 
+	// For VMStack: check if exit have been executed
+	bool		has_exited = false;
 private:
 };
 
