@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/08 14:38:11 by jhache            #+#    #+#              #
-#    Updated: 2019/07/09 09:51:02 by jhache           ###   ########.fr        #
+#    Updated: 2019/07/16 16:37:11 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ LEX := flex
 
 
 # NB:
-# Several files are generated from the same commands. In order to this makefile to not relink,
+# Several files are generated from the same commands. In order to not relink with this makefile,
 # we will put a dependencies on only one generated file, but every files will be re-generated on `make` command.
 DEPENDENCY := src/Parser/lex.yy.cpp
 
@@ -60,10 +60,6 @@ $(DEPENDENCY): $(YACC_SRC) $(LEX_SRC)
 	$(LEX) -o src/Parser/lex.yy.c.bad $(LEX_SRC)
 	sed 's/register //g' src/Parser/lex.yy.c.bad > src/Parser/lex.yy.cpp
 	$(RM) src/Parser/lex.yy.c.bad
-
-
-testParser:
-	make -f makefile_cpp testParser
 
 clean:
 	$(RM) $(OUT_FILES)
