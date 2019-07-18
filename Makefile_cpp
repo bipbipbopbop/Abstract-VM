@@ -6,7 +6,7 @@
 #    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 13:39:04 by jhache            #+#    #+#              #
-#    Updated: 2019/07/17 19:06:21 by jhache           ###   ########.fr        #
+#    Updated: 2019/07/18 16:31:00 by jhache           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC_NAME += Instruction/Add.cpp					\
 			Instruction/Push.cpp				\
 			Instruction/Sub.cpp
 SRC_NAME += Operand/Operand.cpp					\
+			Operand/OperandFactory.cpp			\
 			Operand/OperandType.cpp				\
 			Operand/OperandValue.cpp
 SRC_NAME +=	Parser/lex.yy.cpp					\
@@ -65,6 +66,7 @@ INC_NAME += Exception/InstructionException.hpp	\
 			Exception/OperandValueException.hpp
 INC_NAME += Operand/IOperand.hpp				\
 			Operand/Operand.hpp					\
+			Operand/OperandFactory.hpp			\
 			Operand/OperandType.hpp				\
 			Operand/OperandValue.hpp
 INC_NAME +=	Parser/Parser.tab.h					\
