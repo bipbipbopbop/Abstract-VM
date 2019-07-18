@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:43:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/17 17:35:15 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/18 15:29:52 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,30 @@ int		Driver::parse(std::string const &fileName)
 {
 	int		result;
 
-	this->_fileName = fileName;
+	if (!this->_instructionList.empty())
+		this->_instructionList.clear();
+
+	if (fileName == "-")
+		this->_fileName = "stdin";
+	else
+		this->_fileName = fileName;
 	location.initialize(&this->_fileName);
-	this->_scanBegin();
+	if (!this->_scanBegin())
+	{
+		std::cout << "Error while starting the scanner." << std::endl;
+		return !0;
+	}
 
 	yy::parser parser(*this);
-	parser.set_debug_level(false);
+	parser.set_debug_level(this->trace_parsing);
 
 	result = parser();
-	this->_scanEnd();
+
+	if (!this->_scanEnd())
+	{
+		std::cout << "Error while closing the scanner." << std::endl;
+		return !0;
+	}
 
 	return result;
 }

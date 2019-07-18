@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:42:53 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 15:25:22 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/18 12:29:40 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
 
 	AbstractVM  &operator=(AbstractVM const &rhs);
 
-	bool		parse(std::string const &filename);
+	bool		parse(int argc, char **argv);
 	void		execute();
 
 private:

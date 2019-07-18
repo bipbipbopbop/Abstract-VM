@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:45:54 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/17 19:12:00 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/18 13:01:32 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,34 @@ AbstractVM  &AbstractVM::operator=(AbstractVM const &rhs)
 }
 
 
-bool		AbstractVM::parse(std::string const &filename)
+bool		AbstractVM::parse(int argc, char **argv)
 {
-	int		res = this->_parser.parse(filename.c_str());
+	int		res;
 
-	if (res != 0)
+	if (argc == 1)
 	{
-		//handle error
+		std::cout << "usage:\n./abstract_vm [-p] [-s] filename" << std::endl << std::endl;
+		std::cout << "global options:\n  -p\tactivate trace on parsing\n  -s\tactivate trace on scanning" << std::endl;
 		return false;
 	}
-	//maybe check the list ?
-	return true;
+
+	for (int i = 1; i < argc; ++i)
+	{
+		if (argv[i] == std::string("-p"))
+			this->_parser.trace_parsing = true;
+		else if (argv[i] == std::string("-s"))
+			this->_parser.trace_scanning = true;
+		else
+		{
+			res = this->_parser.parse(argv[i]);
+
+			if (res != 0)
+				std::cout << "An error occurs during parsing '" << argv[i] << "' file." << std::endl;
+			return res == 0;
+		}
+	}
+	std::cout << "Error: no filename provided." << std::endl;
+	return false;
 }
 
 void		AbstractVM::execute()

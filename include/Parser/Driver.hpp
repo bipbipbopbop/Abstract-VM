@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:36:05 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/16 16:14:24 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/18 12:39:14 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ private:
 	std::string				_fileName;
 
 	// those 2 functions are implemented in the corresponding .l files
-	void	_scanBegin();
-	void	_scanEnd();
+	bool	_scanBegin();
+	bool	_scanEnd();
 
 };
 

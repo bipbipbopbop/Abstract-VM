@@ -8,14 +8,15 @@
 
 %option debug nounput noinput
 
-DIGITS	[0-9]+
-INT		-?{DIGITS}
-FLOAT	-?{DIGITS}\.{DIGITS}+
+DIGITS		[0-9]+
+INT			-?{DIGITS}
+FLOAT		-?{DIGITS}\.{DIGITS}?
 
-SEP		[\n]+
+SEP			[\n]+
 
-COMMENT	;.*$
-MY_EOF	^;;$
+COMMENT		;.*$
+MY_EOF		^;;$
+WHITESPACES	[ \t\r]+
 
 %{
 	// Code run each time a pattern is matched.
@@ -31,7 +32,6 @@ MY_EOF	^;;$
 	loc.step();
 %}
 
-[ \t\r]		{ loc.step(); }
 push		{ return yy::parser::make_PUSH(loc); }
 pop			{ return yy::parser::make_POP(loc); }
 dump		{ return yy::parser::make_DUMP(loc); }
@@ -60,22 +60,25 @@ double		{ return yy::parser::make_DOUBLE(loc); }
 {COMMENT}	{ return yy::parser::make_COMMENT(loc); }
 <<EOF>>		{ return yy::parser::make_END(loc); }
 
+{WHITESPACES}	{ return yy::parser::make_WHITESPACES(loc); }
+.				{ return yy::parser::make_CHAR(loc); }
 
 %%
 
-void	Driver::_scanBegin()
+bool	Driver::_scanBegin()
 {
-	yy_flex_debug = trace_scanning;
-	if (this->_fileName.empty() || this->_fileName == "-")
+	yy_flex_debug = this->trace_scanning;
+	if (this->_fileName == "stdin")
 		yyin = stdin;
 	else if (!(yyin = fopen(this->_fileName.c_str(), "r")))
 	{
-		std::cout << "can't open " << this->_fileName << ": " << strerror(errno) << '\n';
-		exit(EXIT_FAILURE);
+		std::cout << "can't open " << this->_fileName << ": " << strerror(errno) << std::endl;
+		return false;
 	}
+	return true;
 }
 
-void	Driver::_scanEnd()
+bool	Driver::_scanEnd()
 {
-	fclose(yyin);
+	return fclose(yyin) == 0;
 }
