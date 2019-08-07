@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 17:45:54 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/18 13:01:32 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/22 10:09:48 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ AbstractVM  &AbstractVM::operator=(AbstractVM const &rhs)
 
 bool		AbstractVM::parse(int argc, char **argv)
 {
-	int		res;
+	bool	res;
 
 	if (argc == 1)
 	{
@@ -55,9 +55,9 @@ bool		AbstractVM::parse(int argc, char **argv)
 		{
 			res = this->_parser.parse(argv[i]);
 
-			if (res != 0)
-				std::cout << "An error occurs during parsing '" << argv[i] << "' file." << std::endl;
-			return res == 0;
+			if (!res)
+				std::cout << "An error occurs while parsing '" << argv[i] << "' file." << std::endl;
+			return res;
 		}
 	}
 	std::cout << "Error: no filename provided." << std::endl;

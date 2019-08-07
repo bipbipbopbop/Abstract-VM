@@ -6,23 +6,24 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 11:53:43 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/17 17:10:02 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/19 11:03:30 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Push.hpp"
 #include "InstructionException.hpp"
+#include "OperandFactory.hpp"
 
 Push::Push()
 	: _value(nullptr)
 {}
 
-Push::Push(IOperand *value)
+Push::Push(const IOperand *value)
 	: _value(value)
 {}
 
 Push::Push(Push const &src)
-	: _value(Operand::StrToOperand(src._value->toString(), src._value->getType()))
+	: _value(OperandFactory::CreateOperand(src._value->getType(), src._value->toString()))
 {}
 
 Push::Push(Push &&src)

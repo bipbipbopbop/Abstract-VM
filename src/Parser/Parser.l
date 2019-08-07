@@ -10,7 +10,7 @@
 
 DIGITS		[0-9]+
 INT			-?{DIGITS}
-FLOAT		-?{DIGITS}\.{DIGITS}?
+FLOAT		-?{DIGITS}\.{DIGITS}
 
 SEP			[\n]+
 

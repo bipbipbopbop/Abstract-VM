@@ -6,13 +6,14 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:03:18 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/18 16:29:51 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/19 12:51:58 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "OperandFactory.hpp"
 #include "OperandValue.hpp"
 #include <sstream>
+#include <string>
 
 namespace OperandFactory
 {
@@ -60,7 +61,7 @@ namespace OperandFactory
 			std::stringstream	ss(value);
 
 			ss >> val;
-			if (ss.fail())
+			if (ss.fail() || std::to_string(val).find("inf") != std::string::npos)
 				throw OperandValue_Overflow("Invalid type 'float' for value '" + value + "'");
 
 			return new Operand(OperandValue(val));
@@ -72,7 +73,7 @@ namespace OperandFactory
 			std::stringstream	ss(value);
 
 			ss >> val;
-			if (ss.fail())
+			if (ss.fail() || std::to_string(val).find("inf") != std::string::npos)
 				throw OperandValue_Overflow("Invalid type 'double' for value '" + value + "'");
 
 			return new Operand(OperandValue(val));

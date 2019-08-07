@@ -1,0 +1,55 @@
+; ----------
+; test.avm -
+; ----------
+
+; normal cases
+push     int8(42)
+print
+;add ; 1 operand only
+;sub int8(32) ; bad syntax
+push		int8(-128)
+push int8(127)
+;push float(inf) ; inf represent overflow, so it is not parsed
+
+push int16(0)
+push int16(32767)
+push int16(-32768)
+
+push int32(0)
+push int32(2147483647)
+push int32(-2147483648)
+
+;push float(123.46) ; it works
+
+
+; syntax error
+;push float(0) ; int value
+;push int16(1.3) ; float value
+;pussh int32(9) ; pussh is unknown
+;a d d ; a is a unrecognized character
+
+; overflow (and "underflow")
+;push int8(255)
+
+;push int8(-129)
+
+;push int16(65535)
+
+;push int32(-4000000000)
+
+;mul ; overflow on int32 (see last pushed operands)
+
+;; test overflow on float
+;push float(312000000000000000000000000000000000000.0)
+;push float(30000000000000000000000000000000000000.0)
+;add
+
+; one instruction per line
+;pop pop
+pop
+pop
+
+dump
+
+exit
+; File MUST finish by an empty line

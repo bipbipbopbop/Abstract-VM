@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:36:05 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/18 12:39:14 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/19 11:30:26 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ public:
 
 	Driver	&operator=(Driver const &rhs);
 
-	int		parse(std::string const &fileName);
+	bool	parse(std::string const &fileName);
 	void	pushInstruction(IInstruction *inst);
 
 	// set as public because it is used by the parser/lexer, not by me

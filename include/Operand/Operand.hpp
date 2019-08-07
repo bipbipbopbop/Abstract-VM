@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 14:04:09 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/18 16:00:40 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/19 11:15:45 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ public:
 
 	virtual std::string const	&toString() const;
 
-	static Operand				*StrToOperand(std::string const &str, OperandType type);
 	static OperandValue			convertStr(std::string const &str, OperandType type);
 
 private:

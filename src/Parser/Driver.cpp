@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:43:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/18 15:29:52 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/19 11:31:15 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ Driver	&Driver::operator=(Driver const &rhs)
 	return *this;
 }
 
-int		Driver::parse(std::string const &fileName)
+bool	Driver::parse(std::string const &fileName)
 {
-	int		result;
-
 	if (!this->_instructionList.empty())
 		this->_instructionList.clear();
 
@@ -45,21 +43,31 @@ int		Driver::parse(std::string const &fileName)
 	if (!this->_scanBegin())
 	{
 		std::cout << "Error while starting the scanner." << std::endl;
-		return !0;
+		return false;
 	}
 
 	yy::parser parser(*this);
 	parser.set_debug_level(this->trace_parsing);
 
-	result = parser();
+	int result = -1;
+	try
+	{
+		result = parser();
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "Error while parsing: " << e.what() << std::endl;
+
+		return false;
+	}
 
 	if (!this->_scanEnd())
 	{
 		std::cout << "Error while closing the scanner." << std::endl;
-		return !0;
+		return false;
 	}
 
-	return result;
+	return result == 0;
 }
 
 void	Driver::pushInstruction(IInstruction *inst)

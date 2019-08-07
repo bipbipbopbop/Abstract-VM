@@ -8,7 +8,7 @@
 
 %code requires {
 	# include <string>
-	# include "Operand.hpp"
+	# include "OperandFactory.hpp"
 	# include "Add.hpp"
 	# include "Assert.hpp"
 	# include "Div.hpp"
@@ -40,7 +40,6 @@
 	SEP			"separator"
 	WHITESPACES	"whitespaces"
 	COMMENT		"comment"
-	MY_EOF		"my_eof"
 	LPAREN		"("
 	RPAREN		")"
 	CHAR		"character"
@@ -73,7 +72,7 @@
 
 %type <OperandType> inttype
 %type <OperandType> floattype
-%type <Operand*> value
+%type <const IOperand*> value
 %type <IInstruction*> instruction
 
 %printer { yyo << $$; } <*>;
@@ -85,7 +84,7 @@ input:
 	%empty {}
 	| instruction eol input { drv.pushInstruction($1); }
 	| eol input {}
-	| MY_EOF {}
+	| END {}
 	| WHITESPACES input {}
 	;
 
@@ -110,8 +109,8 @@ instruction:
 	;
 
 value:
-	floattype LPAREN FLOAT_VALUE RPAREN	{ $$ = Operand::StrToOperand($3, $1); }
-	| inttype LPAREN INT_VALUE RPAREN	{ $$ = Operand::StrToOperand($3, $1); }
+	floattype LPAREN FLOAT_VALUE RPAREN	{ $$ = OperandFactory::CreateOperand($1, $3); }
+	| inttype LPAREN INT_VALUE RPAREN	{ $$ = OperandFactory::CreateOperand($1, $3); }
 	;
 
 inttype:

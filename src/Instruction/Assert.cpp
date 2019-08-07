@@ -6,23 +6,24 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 12:06:39 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/17 17:10:43 by jhache           ###   ########.fr       */
+/*   Updated: 2019/07/19 11:03:26 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Assert.hpp"
 #include "InstructionException.hpp"
+#include "OperandFactory.hpp"
 
 Assert::Assert()
 	: _value(nullptr)
 {}
 
-Assert::Assert(IOperand *value)
+Assert::Assert(const IOperand *value)
 	: _value(value)
 {}
 
 Assert::Assert(Assert const &src)
-	: _value(Operand::StrToOperand(src._value->toString(), src._value->getType()))
+	: _value(OperandFactory::CreateOperand(src._value->getType(), src._value->toString()))
 {}
 
 Assert::Assert(Assert &&src)
