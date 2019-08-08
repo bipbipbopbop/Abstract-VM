@@ -12,7 +12,7 @@ DIGITS		[0-9]+
 INT			-?{DIGITS}
 FLOAT		-?{DIGITS}\.{DIGITS}
 
-SEP			[\n]+
+SEP			\n
 
 COMMENT		;.*$
 MY_EOF		^;;$
@@ -58,7 +58,7 @@ double		{ return yy::parser::make_DOUBLE(loc); }
 {SEP}		{ loc.lines(yyleng); loc.step(); return yy::parser::make_SEP(loc); }
 {MY_EOF}	{ return yy::parser::make_END(loc); }
 {COMMENT}	{ return yy::parser::make_COMMENT(loc); }
-<<EOF>>		{ return yy::parser::make_END(loc); }
+<<EOF>>		{ return yy::parser::make_EOF(loc); }
 
 {WHITESPACES}	{ return yy::parser::make_WHITESPACES(loc); }
 .				{ return yy::parser::make_CHAR(loc); }

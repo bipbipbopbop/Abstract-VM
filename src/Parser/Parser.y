@@ -36,7 +36,8 @@
 %define api.token.prefix {TOK_}
 /* miscellaneous parsing tokens */
 %token
-	END		0	"end of file"
+	EOF		0	"end of file"
+	END			"end of reading"
 	SEP			"separator"
 	WHITESPACES	"whitespaces"
 	COMMENT		"comment"
@@ -81,15 +82,21 @@
 %start input;
 
 input:
-	| instruction eol input { drv.pushInstruction($1); }
+	| instruction eol input			{ drv.pushInstruction($1); }
+	| instruction eof 				{ drv.pushInstruction($1); }
+	| COMMENT eof {}
 	| eol input {}
-	| END {}
 	| WHITESPACES input {}
 	;
 
 eol:
 	SEP {}
 	| COMMENT SEP {}
+	;
+
+eof:
+	EOF {}
+	| SEP END EOF {}
 	;
 
 instruction:
