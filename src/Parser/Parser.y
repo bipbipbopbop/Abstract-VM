@@ -81,7 +81,6 @@
 %start input;
 
 input:
-	%empty {}
 	| instruction eol input { drv.pushInstruction($1); }
 	| eol input {}
 	| END {}

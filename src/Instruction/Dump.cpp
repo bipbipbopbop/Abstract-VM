@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Dump.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 15:42:46 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/19 11:43:29 by jhache           ###   ########.fr       */
+/*   Updated: 2019/08/08 13:08:18 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <algorithm>
 #include "Dump.hpp"
 #include "InstructionException.hpp"
 

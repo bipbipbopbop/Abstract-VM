@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OperandFactory.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:03:18 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/19 12:51:58 by jhache           ###   ########.fr       */
+/*   Updated: 2019/08/08 13:08:56 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "OperandValue.hpp"
 #include <sstream>
 #include <string>
+#include <functional>
 
 namespace OperandFactory
 {

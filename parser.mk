@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile_parser                                    :+:      :+:    :+:    #
+#    parser.mk                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
+#    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/08 14:38:11 by jhache            #+#    #+#              #
-#    Updated: 2019/07/16 16:37:11 by jhache           ###   ########.fr        #
+#    Updated: 2019/08/08 13:03:42 by julien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,9 @@ PARSER_PATH := $(SRC_PATH)/Parser
 
 # Commands
 RM := rm -f
+
+# OS detection
+UNAME_S := $(shell uname -s)
 
 
 # Sources files
@@ -39,7 +42,11 @@ OUT_FILES :=	$(addprefix $(INC_PATH)/, $(INC_NAME)) \
 
 
 # Parser Compiler
-YACC := ~/.brew/opt/bison/bin/bison
+ifeq ($(UNAME_S), Linux)
+	YACC := /usr/local/bin/bison
+else
+	YACC := ~/.brew/opt/bison/bin/bison
+endif
 LEX := flex
 
 

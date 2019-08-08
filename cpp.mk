@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile_cpp                                       :+:      :+:    :+:    #
+#    cpp.mk                                             :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jhache <jhache@student.42.fr>              +#+  +:+       +#+         #
+#    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 13:39:04 by jhache            #+#    #+#              #
-#    Updated: 2019/07/18 16:31:00 by jhache           ###   ########.fr        #
+#    Updated: 2019/08/08 14:31:18 by julien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,7 @@ INC_DIRS := $(sort $(dir $(INC)))
 # Compiler
 CC := g++
 CCFLAGS := -Wall -Werror -Wextra -std=c++1z
+CCFLAGS += -Wno-empty-body
 INCFLAGS := $(addprefix -iquote , $(INC_DIRS))
 LDFLAGS := -ll
 
@@ -92,7 +93,7 @@ LDFLAGS := -ll
 all: $(NAME)
 
 $(NAME): $(OBJ_DIRS) $(OBJ)
-	$(CC) -o $@ $(LDFLAGS) $(OBJ)
+	$(CC) -o $@ $(OBJ) $(LDFLAGS)
 
 
 $(OBJ_DIRS):
