@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Driver.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 12:43:26 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/19 11:31:15 by jhache           ###   ########.fr       */
+/*   Updated: 2019/08/08 17:35:06 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,5 @@ bool	Driver::parse(std::string const &fileName)
 
 void	Driver::pushInstruction(IInstruction *inst)
 {
-	// push_front because the parser work recursively,
-	// so it start by the last instruction
-	this->_instructionList.push_front(inst);
+	this->_instructionList.push_back(inst);
 }

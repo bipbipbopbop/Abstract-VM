@@ -36,8 +36,7 @@
 %define api.token.prefix {TOK_}
 /* miscellaneous parsing tokens */
 %token
-	EOF		0	"end of file"
-	END			"end of reading"
+	END		0	"end of file"
 	SEP			"separator"
 	WHITESPACES	"whitespaces"
 	COMMENT		"comment"
@@ -71,8 +70,8 @@
 %token <std::string> FLOAT_VALUE	"float_value"
 %token <std::string> INT_VALUE		"int_value"
 
-%type <OperandType> inttype
-%type <OperandType> floattype
+%type <OperandType> int_type
+%type <OperandType> float_type
 %type <const IOperand*> value
 %type <IInstruction*> instruction
 
@@ -82,21 +81,17 @@
 %start input;
 
 input:
-	| instruction eol input			{ drv.pushInstruction($1); }
-	| instruction eof 				{ drv.pushInstruction($1); }
-	| COMMENT eof {}
-	| eol input {}
-	| WHITESPACES input {}
+	line_content SEP input {}
+	| line_content END { return 0; }
+	| SEP input {}
+	| END { return 0; }
 	;
 
-eol:
-	SEP {}
-	| COMMENT SEP {}
-	;
-
-eof:
-	EOF {}
-	| SEP END EOF {}
+line_content:
+	WHITESPACES line_content {}
+	| COMMENT {}
+	| instruction 						{ drv.pushInstruction($1); }
+	| instruction COMMENT 				{ drv.pushInstruction($1); }
 	;
 
 instruction:
@@ -115,17 +110,17 @@ instruction:
 	;
 
 value:
-	floattype LPAREN FLOAT_VALUE RPAREN	{ $$ = OperandFactory::CreateOperand($1, $3); }
-	| inttype LPAREN INT_VALUE RPAREN	{ $$ = OperandFactory::CreateOperand($1, $3); }
+	float_type LPAREN FLOAT_VALUE RPAREN	{ $$ = OperandFactory::CreateOperand($1, $3); }
+	| int_type LPAREN INT_VALUE RPAREN		{ $$ = OperandFactory::CreateOperand($1, $3); }
 	;
 
-inttype:
+int_type:
 	INT8		{ $$ = OperandType::Int8; }
 	| INT16		{ $$ = OperandType::Int16; }
 	| INT32		{ $$ = OperandType::Int32; }
 	;
 
-floattype:
+float_type:
 	FLOAT		{ $$ = OperandType::Float; }
 	| DOUBLE	{ $$ = OperandType::Double; }
 	;

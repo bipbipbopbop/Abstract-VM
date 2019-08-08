@@ -3,8 +3,8 @@
 ; ----------
 
 ; normal cases
-push     int8(42)
-print
+push     int8(42);test
+print ; test
 ;add ; 1 operand only
 ;sub int8(32) ; bad syntax
 push		int8(-128)

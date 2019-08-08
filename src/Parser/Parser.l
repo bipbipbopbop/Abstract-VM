@@ -14,8 +14,8 @@ FLOAT		-?{DIGITS}\.{DIGITS}
 
 SEP			\n
 
-COMMENT		;.*$
-MY_EOF		^;;$
+COMMENT		;.*
+END			^;;$
 WHITESPACES	[ \t\r]+
 
 %{
@@ -56,9 +56,9 @@ double		{ return yy::parser::make_DOUBLE(loc); }
 \)			{ return yy::parser::make_RPAREN(loc); }
 
 {SEP}		{ loc.lines(yyleng); loc.step(); return yy::parser::make_SEP(loc); }
-{MY_EOF}	{ return yy::parser::make_END(loc); }
+{END}		{ return yy::parser::make_END(loc); }
 {COMMENT}	{ return yy::parser::make_COMMENT(loc); }
-<<EOF>>		{ return yy::parser::make_EOF(loc); }
+<<EOF>>		{ return yy::parser::make_END(loc); }
 
 {WHITESPACES}	{ return yy::parser::make_WHITESPACES(loc); }
 .				{ return yy::parser::make_CHAR(loc); }
