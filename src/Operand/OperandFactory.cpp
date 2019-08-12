@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OperandFactory.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:03:18 by jhache            #+#    #+#             */
-/*   Updated: 2019/08/08 13:08:56 by julien           ###   ########.fr       */
+/*   Updated: 2019/08/12 12:12:53 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ namespace OperandFactory
 			std::stringstream	ss(value);
 
 			ss >> val;
-			if (ss.fail() || static_cast<int8_t>(val) != val)//TODO: test it
+			if (ss.fail() || (static_cast<int8_t>(val) != val
+					&& val <= std::numeric_limits<int8_t>::max()
+					&& val >= std::numeric_limits<int8_t>::min()))
 				throw OperandValue_Overflow("Invalid type 'int8' for value '" + value + "'");
 
 			return new Operand(OperandValue(static_cast<int8_t>(val)));
@@ -55,7 +57,7 @@ namespace OperandFactory
 
 			return new Operand(OperandValue(val));
 		}
-		
+
 		IOperand const *createFloat(std::string const &value)
 		{
 			float				val;
@@ -67,7 +69,7 @@ namespace OperandFactory
 
 			return new Operand(OperandValue(val));
 		}
-		
+
 		IOperand const *createDouble(std::string const &value)
 		{
 			double				val;

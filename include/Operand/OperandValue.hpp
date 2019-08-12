@@ -6,7 +6,7 @@
 /*   By: jhache <jhache@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 11:58:19 by jhache            #+#    #+#             */
-/*   Updated: 2019/07/17 16:45:39 by jhache           ###   ########.fr       */
+/*   Updated: 2019/08/12 12:21:31 by jhache           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,8 +181,7 @@ struct	OperandValue
 				throw OperandValue_DivisionByZero("Instruction div Failed");
 			if (lhs == std::numeric_limits<ArithmeticT>::min() && rhs == -1)
 				throw OperandValue_Overflow("Instruction div Failed");
-
-			return lhs / rhs;
+			return static_cast<ArithmeticT>(lhs / rhs);
 		}
 		else
 		{
@@ -214,7 +213,7 @@ struct	OperandValue
 			if (rhs == 0)
 				throw OperandValue_ModuloByZero("Instruction mod Failed");
 
-			return lhs % rhs;
+			return static_cast<ArithmeticT>(lhs % rhs);
 		}
 		else if constexpr (std::is_same<ArithmeticT, float>::value)
 		{
