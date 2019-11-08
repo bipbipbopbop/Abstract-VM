@@ -13,7 +13,7 @@ Here is a small description of the program, as describe in the project subject:
 AbstractVM is a machine that uses a stack to compute simple arithmetic expressions.
 These arithmetic expressions are provided to the machine as basic assembly programs.
 ```
-More informations about the assembly language used in the project can be found in the project subject.
+More informations about the assembly language used in the project can be found in [the project subject](https://github.com/julienhache/Abstract-VM/blob/master/abstract-vm.en.pdf).
 
 
 ### Features
